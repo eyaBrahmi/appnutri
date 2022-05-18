@@ -20,7 +20,7 @@ class FicheController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Fiche::all(), 200);
     }
 
     /**
@@ -41,46 +41,19 @@ class FicheController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'aliment_id'=> Aliment::join('fiches', 'aliments.id', '=', 'fiches.aliment_id')->get(),
-        //      'user_id' =>Users::join('fiches', 'users.id', '=', 'fiches.user_id')->get(),
- 
-        //  ]);
-  
-        // Fiche::create([
-        //     'aliment_id' => $request->get('aliment_id') ,
-        //     'user_id' => $request ->get('user_id'),
-        // ]);
-
-    
-            // 'aliment_id' => Aliment::get(['aliment.id']),
-            // 'user_id' => Users::get(['users.id']),
-            // $aliment = DB::table('aliments')->get('id');
-            // $aliment = $request->get('aliment_id');
-            // $user = DB::table('users')->get('id');
-            // $user = $request->get('user_id');
-        //     $id = $request->get('id');
-            
-        //  $user = DB::table('users')->select($id);
-        //  $aliment = DB::table('aliments')->select($id);
-
-        // $aliment= Aliment::find('id');
-        // $user = Users::find('id'); 
-
-        $aliment = Aliment::find('id');
-        $user = Users::find('id');
-         
-
-       
+       $aliment_id = $request->input('aliment_id');
+       $user_id = $request->input('user_id');
         $fiche =new Fiche();
-        $fiche->aliment_id= $aliment;
-        $fiche->aliment_id= $aliment->id;
-        $fiche->user_id= $user;
+        $fiche->aliment_id= $aliment_id;
+        $fiche->user_id= $user_id;
         
 
         
         
          $fiche->save();
+
+       
+
        
         return response()->json(['message' => 'ajouter'], 201); 
     }
@@ -93,7 +66,11 @@ class FicheController extends Controller
      */
     public function show($id)
     {
-        //
+        $fiche = Fiche::find($id);
+        if(is_null($fiche)) {
+            return response()->json(['message' => 'fiche Not Found'], 404);
+        }
+        return response()->json($fiche::find($id), 200);
     }
 
     /**
@@ -104,7 +81,9 @@ class FicheController extends Controller
      */
     public function edit($id)
     {
-        //
+        $fiche =  Fiche::find($id);
+
+        return response()->json(['message' => 'edited'], 201);     
     }
 
     /**
@@ -116,7 +95,13 @@ class FicheController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $fiche = Fiche::find($id);
+        $fiche -> aliment_id = $request->input('aliment_id');
+        $fiche -> user_id = $request->input('user_id');
+        $fiche->update();
+
+        return response($fiche, 200);
+
     }
 
     /**
@@ -127,6 +112,9 @@ class FicheController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $fiche = Fiche::find($id);
+            $fiche->delete();
+      
+            return response()->json(['message' => 'supprimer'], 201);
     }
 }

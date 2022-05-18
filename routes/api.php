@@ -18,12 +18,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//fiche
+
 Route::get('/fiche','FicheController@index');
-Route::post('/store','FicheController@store');
+Route::post('/fiche/store','FicheController@store');
 Route::get('/show/{id}','FicheController@show');
 Route::get('/ficheedit/{id}','FicheController@edit');
 Route::patch('/ficheupdate/{id}','FicheController@update');
 Route::delete('/fichedelete/{id}','FicheController@destroy');
+
 
 //aliments route
 Route::get('/aliment','AlimentController@index');
@@ -32,3 +35,4 @@ Route::get('/show/{id}','AlimentController@show');
 Route::get('/alimentedit/{id}','AlimentController@edit');
 Route::patch('/alimentupdate/{id}','AlimentController@update');
 Route::delete('/alimentdelete/{id}','AlimentController@destroy');
+

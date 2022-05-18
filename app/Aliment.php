@@ -18,6 +18,6 @@ class Aliment extends Model
 
       public function fiches(){
           
-          return $this->hasMany(Fiche::class, 'aliment_id', 'id');
+          return $this->hasMany(Fiche::class,'id', 'aliment_id');
       }
 }

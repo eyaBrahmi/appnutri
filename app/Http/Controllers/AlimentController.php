@@ -81,7 +81,8 @@ public function update(Request $request, Aliment $aliment,$id)
     {
         $aliment =  Aliment::find($id);
 
-        return response()->json(['message' => 'edited'], 201);      }
+        return response()->json(['message' => 'edited'], 201);     
+     }
 
         public function destroy(Aliment $aliment,$id)
     
